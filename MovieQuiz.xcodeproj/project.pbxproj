@@ -18,7 +18,6 @@
 		AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7AFA542836189F00399704 /* Array+Extensions.swift */; };
 		CE1C19D529AFA9F400BB762C /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1C19D329AFA9F400BB762C /* YS Display-Bold.ttf */; };
 		CE1C19D629AFA9F400BB762C /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1C19D429AFA9F400BB762C /* YS Display-Medium.ttf */; };
-		CE1C19D729AFAC1900BB762C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD1ABABF2831907F00B3E448 /* Info.plist */; };
 		CE28E7B1298E619700D2B237 /* QuestionFactoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE28E7B0298E619700D2B237 /* QuestionFactoryDelegate.swift */; };
 		CE2FE2D52993E00E00BB3388 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FE2D42993E00E00BB3388 /* AlertModel.swift */; };
 		CE2FE2D72993E15400BB3388 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2FE2D62993E15400BB3388 /* AlertPresenter.swift */; };
@@ -126,7 +125,6 @@
 		AD1ABAB02831907B00B3E448 /* MovieQuiz */ = {
 			isa = PBXGroup;
 			children = (
-				CE27C293299E1663004CDE29 /* Documents */,
 				CE873B5A298A77FA0090011D /* Models */,
 				CE873B57298A71C60090011D /* Services */,
 				8F4738322848DE2A005DF65E /* Presentation */,
@@ -148,13 +146,6 @@
 				AD77F5732857F8810062FB14 /* Date+Extensions.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		CE27C293299E1663004CDE29 /* Documents */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Documents;
 			sourceTree = "<group>";
 		};
 		CE873B57298A71C60090011D /* Services */ = {
@@ -242,7 +233,6 @@
 			files = (
 				AD1ABABE2831907F00B3E448 /* LaunchScreen.storyboard in Resources */,
 				AD1ABABB2831907F00B3E448 /* Assets.xcassets in Resources */,
-				CE1C19D729AFAC1900BB762C /* Info.plist in Resources */,
 				AD1ABAB92831907B00B3E448 /* Main.storyboard in Resources */,
 				CE1C19D529AFA9F400BB762C /* YS Display-Bold.ttf in Resources */,
 				CE1C19D629AFA9F400BB762C /* YS Display-Medium.ttf in Resources */,
