@@ -71,15 +71,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
     private var correctAnswers: Int = 0  // счетчик правильных ответов
     private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
-    
-    
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    
     private var alertPresenter: AlertPresenter?
-    
-    
     private var statisticService: StatisticService?
     
     
