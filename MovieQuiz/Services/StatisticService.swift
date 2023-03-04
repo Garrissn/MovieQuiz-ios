@@ -19,16 +19,7 @@ private enum Keys: String {
 }
 
 
-struct GameRecord: Codable,Comparable {
-    static func < (lhs: GameRecord, rhs: GameRecord) -> Bool {
-        return lhs.correct < rhs.correct    }
-    
-    let correct: Int
-    let total: Int
-    let date: Date
 
-    
-    }
 
 final class StatisticServiceImplementation: StatisticService {
     private let userDefaults = UserDefaults.standard
