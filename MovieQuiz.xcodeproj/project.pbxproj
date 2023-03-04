@@ -98,14 +98,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		8F474D27287254B000E1AE5F /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				CE3779BD29A0D2310029EAD8 /* StatisticService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		AD1ABAA52831907B00B3E448 = {
 			isa = PBXGroup;
 			children = (
@@ -129,7 +121,6 @@
 				CE873B57298A71C60090011D /* Services */,
 				8F4738322848DE2A005DF65E /* Presentation */,
 				8F474D26287254A000E1AE5F /* Models */,
-				8F474D27287254B000E1AE5F /* Services */,
 				ADF0CF75283FDAA10075F54D /* Helpers */,
 				8F4738332848DE46005DF65E /* Resources */,
 				AD1ABAB12831907B00B3E448 /* AppDelegate.swift */,
@@ -156,6 +147,7 @@
 				CE28E7B0298E619700D2B237 /* QuestionFactoryDelegate.swift */,
 				CE2FE2D82993E97700BB3388 /* AlertPresenterDelegate.swift */,
 				CE3378C329951E0700F3DEC7 /* AlertPresenterProtocol.swift */,
+				CE3779BD29A0D2310029EAD8 /* StatisticService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
