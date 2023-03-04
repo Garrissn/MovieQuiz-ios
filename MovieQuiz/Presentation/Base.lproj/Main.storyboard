@@ -128,6 +128,9 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6Dp-pq-Ol8">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black (ios)"/>
@@ -135,11 +138,14 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mrJ-xQ-Hz2" secondAttribute="trailing" constant="20" id="MpU-UD-Bz5"/>
                             <constraint firstItem="mrJ-xQ-Hz2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XT3-rN-Ojz"/>
                             <constraint firstItem="mrJ-xQ-Hz2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ZK4-cx-pWy"/>
+                            <constraint firstItem="6Dp-pq-Ol8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="boQ-hN-Px7"/>
                             <constraint firstItem="mrJ-xQ-Hz2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cIS-Hw-Aad"/>
+                            <constraint firstItem="6Dp-pq-Ol8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="g3M-yG-20L"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mrJ-xQ-Hz2" secondAttribute="bottom" constant="10" id="k7y-0M-dE9"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="6Dp-pq-Ol8" id="eiw-RB-Gbm"/>
                         <outlet property="counetLabel" destination="Xb2-1Z-Wvt" id="XgH-JZ-Zqw"/>
                         <outlet property="imageView" destination="vm8-Xw-whv" id="cai-Gm-uRJ"/>
                         <outlet property="noButtonClicked" destination="1O1-X6-0UK" id="wVS-2J-kTZ"/>

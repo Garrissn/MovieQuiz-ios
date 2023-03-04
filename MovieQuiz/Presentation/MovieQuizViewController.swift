@@ -68,6 +68,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
     }
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var correctAnswers: Int = 0  // счетчик правильных ответов
     private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
@@ -76,13 +77,31 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    
     private var alertPresenter: AlertPresenter?
-    
-    
     private var statisticService: StatisticService?
     
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
     
+    private func showNetworkError(message: String) {
+        hideLoadingIndicator()
+        
+        let model = AlertModel(title: "Ошибка",
+                               message: message,
+                               buttonText: "Попробовать еще раз") { [weak self] in
+            guard let self = self else {return}
+            self.currentQuestionIndex = 0
+            self.correctAnswers = 0
+            
+            self.questionFactory?.requestNextQuestion()
+        }
+    }
     
     private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из мок данных в модель которую надо //показать на экране
         
