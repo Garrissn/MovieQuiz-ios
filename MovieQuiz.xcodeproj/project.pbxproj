@@ -27,8 +27,8 @@
 		CE873B5E298A78F30090011D /* QuizResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE873B5D298A78F30090011D /* QuizResultsViewModel.swift */; };
 		CE873B60298A79300090011D /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE873B5F298A79300090011D /* QuizQuestion.swift */; };
 		CE873B62298AA2030090011D /* QuestionFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE873B61298AA2030090011D /* QuestionFactoryProtocol.swift */; };
-		CECE8ED129B3B5C5008A6DE6 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CECE8ED029B3B5C5008A6DE6 /* YS Display-Bold.ttf */; };
-		CECE8ED329B3B5CE008A6DE6 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CECE8ED229B3B5CE008A6DE6 /* YS Display-Medium.ttf */; };
+		CEAA0F5F29B4AB65001AEED2 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CEAA0F5D29B4AB65001AEED2 /* YS Display-Medium.ttf */; };
+		CEAA0F6029B4AB65001AEED2 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CEAA0F5E29B4AB65001AEED2 /* YS Display-Bold.ttf */; };
 		CEF1F5B329B384AB00BADFD3 /* GameRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF1F5B229B384AB00BADFD3 /* GameRecord.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +55,8 @@
 		CE873B5D298A78F30090011D /* QuizResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultsViewModel.swift; sourceTree = "<group>"; };
 		CE873B5F298A79300090011D /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		CE873B61298AA2030090011D /* QuestionFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactoryProtocol.swift; sourceTree = "<group>"; };
-		CECE8ED029B3B5C5008A6DE6 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
-		CECE8ED229B3B5CE008A6DE6 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		CEAA0F5D29B4AB65001AEED2 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		CEAA0F5E29B4AB65001AEED2 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		CEF1F5B229B384AB00BADFD3 /* GameRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,8 +168,8 @@
 		CECE8ECF29B3B528008A6DE6 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				CECE8ED229B3B5CE008A6DE6 /* YS Display-Medium.ttf */,
-				CECE8ED029B3B5C5008A6DE6 /* YS Display-Bold.ttf */,
+				CEAA0F5E29B4AB65001AEED2 /* YS Display-Bold.ttf */,
+				CEAA0F5D29B4AB65001AEED2 /* YS Display-Medium.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -235,10 +235,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD1ABABE2831907F00B3E448 /* LaunchScreen.storyboard in Resources */,
-				CECE8ED129B3B5C5008A6DE6 /* YS Display-Bold.ttf in Resources */,
+				CEAA0F5F29B4AB65001AEED2 /* YS Display-Medium.ttf in Resources */,
+				CEAA0F6029B4AB65001AEED2 /* YS Display-Bold.ttf in Resources */,
 				AD1ABABB2831907F00B3E448 /* Assets.xcassets in Resources */,
 				AD1ABAB92831907B00B3E448 /* Main.storyboard in Resources */,
-				CECE8ED329B3B5CE008A6DE6 /* YS Display-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
