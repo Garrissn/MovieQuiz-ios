@@ -84,13 +84,30 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
-    private func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
+//    private func hideLoadingIndicator() {
+//        activityIndicator.isHidden = true
+//        activityIndicator.stopAnimating()
+//    }
+    
+    
+    func didFailToLoadData(with error: Error) {
+        
+        showNetworkError(message: error.localizedDescription) //  в качестве сообщения описание ошибки
     }
     
+    func didLoadDataFromServer() {
+        activityIndicator.isHidden = true // скрываем индикатор загрузки
+        questionFactory?.requestNextQuestion() // показать первый вопрос
+    }
+    
+    
+    
+    
+    
+    
+    
     private func showNetworkError(message: String) {
-        hideLoadingIndicator()
+       // hideLoadingIndicator()
         
         let model = AlertModel(title: "Ошибка",
                                message: message,
@@ -108,7 +125,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
         
         return QuizStepViewModel (
-            image: UIImage(named: model.image) ?? UIImage(), // Распаковка картинки
+            image: UIImage(data: model.image) ?? UIImage(), // Распаковка картинки
             question: model.text, // берем текст вопроса
             questionNumber: "\(currentQuestionIndex + 1) / \(questionsAmount)"  // высчитываем номер вопроса
         )
@@ -199,10 +216,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
         super.viewDidLoad()
         alertPresenter = AlertPresenter(delegate: self)
-        questionFactory = QuestionFactory(delegate: self)
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.requestNextQuestion()
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
         
+        showLoadingIndicator()
+        questionFactory?.loadData()
     }
     
 }
