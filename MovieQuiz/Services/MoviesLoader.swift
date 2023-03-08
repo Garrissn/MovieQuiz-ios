@@ -7,6 +7,8 @@
 
 import Foundation
 
+// сервис загрузки фильмов из NetWorkClient  и преобразования в модель данных MostPopularMovies
+
 protocol MoviesLoading {
     func loadMovies(handler: @escaping (Result<MostPopularMovies,Error>) ->Void )
 }
@@ -23,24 +25,33 @@ struct MoviesLoader: MoviesLoading {
             // Если мы не смогли преобразовать строку в URL, то приложение упадёт с ошибкой
             guard let url = URL(string: "https://imdb-api.com/en/API/Top250Movies/k_76t75xir") else {
                 preconditionFailure("Unable to construct mostPopularMoviesUrl")
-            }
+                        }
             
             return url
         }
+    
     func loadMovies(handler: @escaping (Result<MostPopularMovies,Error>) ->Void ) {
         
         networkClient.fetch(url: mostPopularMoviesUrl) { result in
+         
+            
             switch result {
+                
             case .success(let data):
                 do {
                     let mostPopularMovies = try JSONDecoder().decode(MostPopularMovies.self, from: data)
+              
+                    handler(.success(mostPopularMovies))
+                    print("Suscess")
                 }
                 catch {
                     handler(.failure(error))
+                    print("ошибка загрузки")
                     
                 }
             case .failure(let error):
                 handler(.failure(error))
+                print("не загружено")
             }
         }
         

@@ -6,10 +6,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
  private   func didRecieveAlertModel(alertModel: AlertModel) {
         
-        
         alertPresenter?.makeAlertController(alertModel: alertModel)
-      
-
           }
     
     
@@ -18,8 +15,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         present(alertController, animated: true)
     }
   
-
-
     // MARK: - QuestionFactoryDelegate
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -72,8 +67,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
     private var correctAnswers: Int = 0  // счетчик правильных ответов
     private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
-    
-    
     private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
@@ -84,16 +77,20 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
-//    private func hideLoadingIndicator() {
-//        activityIndicator.isHidden = true
-//        activityIndicator.stopAnimating()
-//    }
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
     
     
     func didFailToLoadData(with error: Error) {
         
-        showNetworkError(message: error.localizedDescription) //  в качестве сообщения описание ошибки
+        showNetworkError(message: error.localizedDescription)//  в качестве сообщения описание ошибки
+    
+        
+        
     }
+    
     
     func didLoadDataFromServer() {
         activityIndicator.isHidden = true // скрываем индикатор загрузки
@@ -107,7 +104,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
     
     private func showNetworkError(message: String) {
-       // hideLoadingIndicator()
+        hideLoadingIndicator()
         
         let model = AlertModel(title: "Ошибка",
                                message: message,
@@ -118,9 +115,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
             
             self.questionFactory?.requestNextQuestion()
         }
+        alertPresenter?.makeAlertController(alertModel: model)
     }
     
-    private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из мок данных в модель которую надо //показать на экране
+    private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
         
         
         
@@ -215,9 +213,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
         
         super.viewDidLoad()
+        
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-        questionFactory?.requestNextQuestion()
+      //  questionFactory?.requestNextQuestion()
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
         
         showLoadingIndicator()

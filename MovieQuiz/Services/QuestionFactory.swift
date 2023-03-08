@@ -9,6 +9,7 @@ import Foundation
 
 
 class QuestionFactory: QuestionFactoryProtocol {
+    
     private let moviesLoader: MoviesLoading
     private weak var delegate: QuestionFactoryDelegate?
 
@@ -90,13 +91,13 @@ class QuestionFactory: QuestionFactoryProtocol {
             var imageData = Data()
             
             do {
-                imageData = try Data(contentsOf: movie.imageURL)
+                imageData = try Data(contentsOf: movie.resizedImageURL)
             } catch {
-                print ("Failed to load Image")
+                print ("Failed to load Image")  //можно сделать сообщение если не получится
             }
             
             let rating = Float(movie.rating) ?? 0
-            let text = "Рейтинг этого фильма больше чем 7?"
+            let text = "Рейтинг этого фильма больше чем 7?"  //поменять вопросы
             let correctAnswer = rating > 7
             
             let question = QuizQuestion(image: imageData,

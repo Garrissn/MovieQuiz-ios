@@ -26,19 +26,21 @@ struct NetworkClient {
             //Проверяем пришла ли ошибка
             if let error = error {
                 handler(.failure(error))
+                print("пришла ошибка")
                 return
             }
             
             //Проверяем, что нам пришел успешный код ответа
             if let response = response as? HTTPURLResponse,
                response.statusCode < 200 || response.statusCode >= 300 {
-                handler(.failure(NetworkError.codeError))
+             handler(.failure(NetworkError.codeError))
                 return
             }
             
             //Возвращаем данные
             guard let data = data else { return }
             handler(.success(data))
+            print("Успешная сессия")
         }
         task.resume()
     }
