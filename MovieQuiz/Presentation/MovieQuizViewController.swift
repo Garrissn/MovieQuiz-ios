@@ -2,20 +2,30 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,AlertPresenterDelegate {
    
+    @IBOutlet weak var noButtonClicked: UIButton!
     
+    @IBOutlet weak var yesButtonClicked: UIButton!
     
- private   func didRecieveAlertModel(alertModel: AlertModel) {
-        
-        alertPresenter?.makeAlertController(alertModel: alertModel)
-          }
+    @IBOutlet private var imageView: UIImageView!
     
+    @IBOutlet private var counetLabel: UILabel!
     
+    @IBOutlet private var textLabel: UILabel!
+    
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    
+    private var correctAnswers: Int = 0  // счетчик правильных ответов
+    private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
+    private let questionsAmount: Int = 10
+    private var questionFactory: QuestionFactoryProtocol?
+    private var currentQuestion: QuizQuestion?
+    private var alertPresenter: AlertPresenter?
+    private var statisticService: StatisticService?
     
     func present(_ alertController: UIAlertController) {
         present(alertController, animated: true)
     }
   
-    // MARK: - QuestionFactoryDelegate
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
@@ -29,71 +39,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         }
     }
     
-    @IBOutlet weak var noButtonClicked: UIButton!
-    
-    @IBOutlet weak var yesButtonClicked: UIButton!
-    
-    @IBOutlet private var imageView: UIImageView!
-    
-    @IBOutlet private var counetLabel: UILabel!
-    
-    @IBOutlet private var textLabel: UILabel!
-    
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = false
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
-    }
-    
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        
-        
-    }
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    private var correctAnswers: Int = 0  // счетчик правильных ответов
-    private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
-    private let questionsAmount: Int = 10
-    private var questionFactory: QuestionFactoryProtocol?
-    private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenter?
-    private var statisticService: StatisticService?
-    
-    private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-    }
-    private func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
-    }
-    
-    
     func didFailToLoadData(with error: Error) {
         
         showNetworkError(message: error.localizedDescription)//  в качестве сообщения описание ошибки
     
-        
-        
     }
     
     
     func didLoadDataFromServer() {
-        activityIndicator.isHidden = true // скрываем индикатор загрузки
+      //  activityIndicator.isHidden = true // скрываем индикатор загрузки
         questionFactory?.requestNextQuestion() // показать первый вопрос
     }
     
@@ -101,6 +55,35 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     func didFailToLoadImage (errorMessage: String) {
         showNetworkError(message: errorMessage)
     }
+    
+    
+    override func viewDidLoad() {
+        
+        
+        super.viewDidLoad()
+        
+        alertPresenter = AlertPresenter(delegate: self)
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
+        showLoadingIndicator()
+        questionFactory?.loadData()
+    }
+    
+    
+    
+    private func showLoadingIndicator() {
+       // activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    private func hideLoadingIndicator() {
+        //activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
+    private   func didRecieveAlertModel(alertModel: AlertModel) {
+           
+           alertPresenter?.makeAlertController(alertModel: alertModel)
+             }
     
     
     
@@ -115,29 +98,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
             guard let self = self else {return}
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
-            
-            
-        
             self.questionFactory?.loadData()
         }))
-        
-        
-        
-//        let model = AlertModel(title: "Ошибка",
-//                               message: message,
-//                               buttonText: "Попробовать еще раз") { [weak self] in
-//            guard let self = self else {return}
-//            self.currentQuestionIndex = 0
-//            self.correctAnswers = 0
-//
-//            self.questionFactory?.requestNextQuestion()
-//        }
-//        alertPresenter?.makeAlertController(alertModel: model)
     }
     
+    
     private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
-        
-        
         
         return QuizStepViewModel (
             image: UIImage(data: model.image) ?? UIImage(), // Распаковка картинки
@@ -147,6 +113,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
     }
     
+    
     private func show(quiz step: QuizStepViewModel) {  // здесь мы заполняем нашу картинку, текст и счётчик данными
         
         imageView.image = step.image
@@ -154,7 +121,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         counetLabel.text = "\(step.questionNumber)"
         
     }
-    
     
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect { // счетчик правильных ответов
@@ -175,9 +141,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
             self.noButtonClicked.isEnabled = true
             
         }
-        
     }
-    
     
     private func showNextQuestionOrResults() {
         guard let statisticService = statisticService else {return}
@@ -201,34 +165,36 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
                 guard let self = self else {return}
                 self.currentQuestionIndex = 0
                 self.correctAnswers = 0
-                
-                
-                
                 self.questionFactory?.requestNextQuestion()
             }))
         } else{
             currentQuestionIndex += 1
-            
             self.questionFactory?.requestNextQuestion()
         }
     }
     
     
-    
-    override func viewDidLoad() {
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
         
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        let givenAnswer = false
         
-        super.viewDidLoad()
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         
-        alertPresenter = AlertPresenter(delegate: self)
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-      //  questionFactory?.requestNextQuestion()
-        statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
-        
-        showLoadingIndicator()
-        questionFactory?.loadData()
     }
     
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        
+        guard let currentQuestion = currentQuestion else {
+            return
+        }
+        
+        let givenAnswer = true
+        
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
 }
 
 
