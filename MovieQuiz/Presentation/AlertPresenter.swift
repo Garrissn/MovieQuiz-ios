@@ -30,10 +30,7 @@ class AlertPresenter: AlertPresenterprotocol {
                alertModel.completion()
             
             
-//            self.currentQuestionIndex = 0
-//            self.correctAnswers = 0 //Обнуляем счетчик правильных ответов
-//            
-//            self.questionFactory?.requestNextQuestion()
+
         }
         
         alert.addAction(completion)

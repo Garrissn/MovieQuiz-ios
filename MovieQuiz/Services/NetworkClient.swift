@@ -26,7 +26,8 @@ struct NetworkClient {
             //Проверяем пришла ли ошибка
             if let error = error {
                 handler(.failure(error))
-                print("пришла ошибка")
+                print("нет соединения с интернетом")
+                
                 return
             }
             

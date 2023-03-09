@@ -42,11 +42,12 @@ struct MoviesLoader: MoviesLoading {
                     let mostPopularMovies = try JSONDecoder().decode(MostPopularMovies.self, from: data)
               
                     handler(.success(mostPopularMovies))
-                    print("Suscess")
+                    print("Удачный парсинг")
                 }
                 catch {
                     handler(.failure(error))
-                    print("ошибка загрузки")
+                    print("ошибка парсинга")
+                    
                     
                 }
             case .failure(let error):

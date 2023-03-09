@@ -52,7 +52,6 @@
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vm8-Xw-whv">
                                         <rect key="frame" x="0.0" y="66" width="374" height="561"/>
-                                        <color key="backgroundColor" name="YP White (ios)"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="vm8-Xw-whv" secondAttribute="height" multiplier="2:3" id="xNP-fo-FNb"/>
                                         </constraints>
@@ -67,7 +66,6 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма меньше чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBp-nT-UQJ" userLabel="Question">
                                                 <rect key="frame" x="42" y="13" width="290" height="55"/>
-                                                <color key="backgroundColor" name="YP Black (ios)"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="55" id="MV2-Ac-ZTs"/>
                                                 </constraints>
@@ -128,7 +126,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6Dp-pq-Ol8">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6Dp-pq-Ol8">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>

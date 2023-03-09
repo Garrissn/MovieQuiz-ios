@@ -18,6 +18,7 @@ class QuestionFactory: QuestionFactoryProtocol {
         self.delegate = delegate
     }
     
+   
     
     private var movies: [MostPopularMovie] = []
     
@@ -32,7 +33,8 @@ class QuestionFactory: QuestionFactoryProtocol {
                     self.movies = mostPopularMovies.items // сохраняем фильм в нашу новую переменную
                     self.delegate?.didLoadDataFromServer() // сообщаем что данные загрузились
                 case .failure(let error):
-                    self.delegate?.didFailToLoadData(with: error) // сообщаем об ошибке нашему MovieQuizViewController
+                    self.delegate?.didFailToLoadData(with: error)
+                    // сообщаем об ошибке нашему MovieQuizViewController
                 }
             }
         }
@@ -93,20 +95,46 @@ class QuestionFactory: QuestionFactoryProtocol {
             do {
                 imageData = try Data(contentsOf: movie.resizedImageURL)
             } catch {
-                print ("Failed to load Image")  //можно сделать сообщение если не получится
+                print ("Failed to load Image")
+                
+                let errorMessage = "Не удалось загрузить изображение"
+                self.delegate?.didFailToLoadImage(errorMessage: errorMessage)
+                
+                
+                //можно сделать сообщение если не получится
             }
             
             let rating = Float(movie.rating) ?? 0
-            let text = "Рейтинг этого фильма больше чем 7?"  //поменять вопросы
-            let correctAnswer = rating > 7
+            let newQuestionIndex = (3...8).randomElement() ?? 0
+            let newWordIndex = (1...2).randomElement() ?? 0
+            let newWord: String
+            if  newWordIndex == 1 { newWord = "больше" } else { newWord = "меньше" }
+            
+            let text = "Рейтинг этого фильма \(newWord) чем \(String(newQuestionIndex))?"  //поменять вопросы
+            
+            if newWord == "больше" { let correctAnswer = rating > Float(newQuestionIndex)
+                
+                let question = QuizQuestion(image: imageData,
+                                            text: text,
+                                            correctAnswer: correctAnswer)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.didReceiveNextQuestion(question: question)}
+            } else {
+            
+            let correctAnswer = rating < Float(newQuestionIndex)
             
             let question = QuizQuestion(image: imageData,
                                         text: text,
                                         correctAnswer: correctAnswer)
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.delegate?.didReceiveNextQuestion(question: question)
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.didReceiveNextQuestion(question: question)
+            }
+//
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//                self.delegate?.didReceiveNextQuestion(question: question)
             }
         }
         

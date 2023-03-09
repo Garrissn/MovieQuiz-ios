@@ -98,24 +98,41 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     }
     
     
-    
-    
+    func didFailToLoadImage (errorMessage: String) {
+        showNetworkError(message: errorMessage)
+    }
     
     
     
     private func showNetworkError(message: String) {
         hideLoadingIndicator()
         
-        let model = AlertModel(title: "Ошибка",
-                               message: message,
-                               buttonText: "Попробовать еще раз") { [weak self] in
+        didRecieveAlertModel(alertModel: AlertModel(title: "Ошибка",
+                                                    message: message,
+                                                    buttonText: "Попробовать еще раз!",
+                                                    completion: {[weak self] in
+            
             guard let self = self else {return}
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             
-            self.questionFactory?.requestNextQuestion()
-        }
-        alertPresenter?.makeAlertController(alertModel: model)
+            
+        
+            self.questionFactory?.loadData()
+        }))
+        
+        
+        
+//        let model = AlertModel(title: "Ошибка",
+//                               message: message,
+//                               buttonText: "Попробовать еще раз") { [weak self] in
+//            guard let self = self else {return}
+//            self.currentQuestionIndex = 0
+//            self.correctAnswers = 0
+//
+//            self.questionFactory?.requestNextQuestion()
+//        }
+//        alertPresenter?.makeAlertController(alertModel: model)
     }
     
     private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
@@ -174,17 +191,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
             "Рекорд: \(statisticService.bestGame.correct)/ \(statisticService.bestGame.total) ( \(statisticService.bestGame.date.dateTimeString))\n" +
           
             "Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
-            
-            
-
-/*
-  сравнивать рез-т текущей игры с рекордом из UserDefaults
- обновить рекорд если лучше
- 
- 
- 
- 
- */
             
           
             didRecieveAlertModel(alertModel: AlertModel(title: "Этот раунд окончен!",
