@@ -66,7 +66,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
         
         super.viewDidLoad()
-        
+        presenter.viewController = self
         alertPresenter = AlertPresenter(delegate: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
@@ -127,7 +127,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+     func showAnswerResult(isCorrect: Bool) {
         if isCorrect { // счетчик правильных ответов
             correctAnswers += 1
         }
@@ -181,24 +181,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = false
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+        presenter.currentQuestion = currentQuestion
+        presenter.noButtonClicked()
         
     }
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+
+        presenter.currentQuestion = currentQuestion
+        presenter.yesButtonClicked()
     }
 }
 
