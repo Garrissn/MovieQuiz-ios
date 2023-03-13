@@ -15,12 +15,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var correctAnswers: Int = 0  // счетчик правильных ответов
-    private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
-    private let questionsAmount: Int = 10
+//    private  var currentQuestionIndex : Int = 0 // индекс текущего вопроса
+//    private let questionsAmount: Int = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticService?
+    
+    private let presenter = MovieQuizPresenter()
+    
+    
     
     func present(_ alertController: UIAlertController) {
         alertController.view.accessibilityIdentifier = "Game results"
@@ -34,7 +38,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
         }
         
         currentQuestion = question
-        let viewModel = convert(model: question)
+        let viewModel = presenter.convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
@@ -97,22 +101,22 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
                                                     completion: {[weak self] in
             
             guard let self = self else {return}
-            self.currentQuestionIndex = 0
+            self.presenter.resetQuestionIndex()
             self.correctAnswers = 0
             self.questionFactory?.loadData()
         }))
     }
     
     
-    private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
-        
-        return QuizStepViewModel (
-            image: UIImage(data: model.image) ?? UIImage(), // Распаковка картинки
-            question: model.text, // берем текст вопроса
-            questionNumber: "\(currentQuestionIndex + 1) / \(questionsAmount)"  // высчитываем номер вопроса
-        )
-        
-    }
+//    private func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
+//
+//        return QuizStepViewModel (
+//            image: UIImage(data: model.image) ?? UIImage(), // Распаковка картинки
+//            question: model.text, // берем текст вопроса
+//            questionNumber: "\(currentQuestionIndex + 1) / \(questionsAmount)"  // высчитываем номер вопроса
+//        )
+//
+//    }
     
     
     private func show(quiz step: QuizStepViewModel) {  // здесь мы заполняем нашу картинку, текст и счётчик данными
@@ -146,9 +150,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     
     private func showNextQuestionOrResults() {
         guard let statisticService = statisticService else {return}
-        if currentQuestionIndex == questionsAmount-1 {
-            statisticService.store(correct: correctAnswers, total: questionsAmount)
-            let text = correctAnswers == questionsAmount ?
+        if self.presenter.isLastQuestion() {
+            statisticService.store(correct: correctAnswers, total: presenter.questionsAmount)
+            let text = correctAnswers == presenter.questionsAmount ?
             "Поздравляем, Вы ответили на 10 из 10!":
             
             "Ваш результат:\(correctAnswers)/10 \n " +
@@ -164,12 +168,12 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
                                                         completion: {[weak self] in
                 
                 guard let self = self else {return}
-                self.currentQuestionIndex = 0
+                self.presenter.resetQuestionIndex() 
                 self.correctAnswers = 0
                 self.questionFactory?.requestNextQuestion()
             }))
         } else{
-            currentQuestionIndex += 1
+            self.presenter.switchToNextQuestion()
             self.questionFactory?.requestNextQuestion()
         }
     }
