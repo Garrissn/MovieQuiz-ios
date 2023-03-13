@@ -23,6 +23,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate,A
     private var statisticService: StatisticService?
     
     func present(_ alertController: UIAlertController) {
+        alertController.view.accessibilityIdentifier = "Game results"
         present(alertController, animated: true)
     }
   
