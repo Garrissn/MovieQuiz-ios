@@ -36,7 +36,7 @@ class ArrayTests: XCTestCase {
         
         
         //Then
-        XCTAssertNotNil(value)
+        XCTAssertNil(value)
         
     }
 }

@@ -13,23 +13,21 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
          
     private var currentQuestion: QuizQuestion?
     
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var questionFactory: QuestionFactoryProtocol?
-    
-  //  private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticService!
     
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
 
-    init(viewController: MovieQuizViewController) {
+    init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
-        //alertPresenter = AlertPresenter(delegate: self)
+        
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -95,7 +93,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     
 //    func present(_ alertController: UIAlertController) {
-//        alertController.view.accessibilityIdentifier = "Game results"
+       // alertController.view.accessibilityIdentifier = "Game results"
 //        present(alertController)
 //    }
     
@@ -131,15 +129,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
  
     
-//       func didRecieveAlertModel(alertModel: AlertModel) {
-//
-//           alertPresenter?.makeAlertController(alertModel: alertModel)
-//             }
-
-    
     func proceedToNextQuestionOrResults() {
-        
-        // guard let statisticService = statisticService else {return}
         
         if self.isLastQuestion() {
             
@@ -176,40 +166,5 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 
             return resultMessage
         }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-//            //statisticService.store(correct: correctAnswers, total: questionsAmount)
-//            let text = correctAnswers == questionsAmount ?
-//            "Поздравляем, Вы ответили на 10 из 10!":
-//
-//            "Ваш результат:\(correctAnswers)/10 \n " +
-//            "Количество сыгранных квизов:\(statisticService.gamesCount) \n" +
-//            "Рекорд: \(statisticService.bestGame.correct)/ \(statisticService.bestGame.total) ( \(statisticService.bestGame.date.dateTimeString))\n" +
-//
-//            "Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
-//
-//
-//            didRecieveAlertModel(alertModel: AlertModel(title: "Этот раунд окончен!",
-//                                                        message: text,
-//                                                        buttonText: "Сыграть еще раз",
-//                                                        completion: {[weak self] in
-//
-//                guard let self = self else {return}
-//                self.restartGame()
-//
-//                self.questionFactory?.requestNextQuestion()
-//            }))
-//        } else {
-//            self.switchToNextQuestion()
-//            questionFactory?.requestNextQuestion()
-//        }
     
 }
