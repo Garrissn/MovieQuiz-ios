@@ -42,7 +42,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
      func showNetworkError(message: String) {
         hideLoadingIndicator()
-        
+      //  alertController.view.accessibilityIdentifier = "Game results"
          let alert = UIAlertController(
                      title: "Ошибка",
                      message: message,
@@ -100,8 +100,8 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         }
 
     alert.addAction(action)
-
-    self.present(alert, animated: true, completion: nil)
+        alert.view.accessibilityIdentifier = "Game results"
+        self.present(alert, animated: true, completion: nil)
  }
 
     
