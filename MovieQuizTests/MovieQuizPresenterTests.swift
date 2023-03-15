@@ -38,7 +38,7 @@ final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
     func show(quiz step: QuizStepViewModel) {
         
     }
-
+    
 }
 
 final class MovieQuizPresenterTests: XCTestCase {

@@ -12,7 +12,7 @@ import XCTest
 struct StubNetworkClient: NetworkRouting {
     
     enum TestError: Error { // тестовая ошибка
-    case test
+        case test
     }
     
     let emulateError: Bool // этот параметр нужен, чтобы заглушка эмулировала либо ошибку сети, либо успешный ответ
@@ -106,8 +106,8 @@ class MoviesLoaderTests: XCTestCase {
             //Then
             switch result {
             case .success(_):
-              
-               XCTFail("Unexpected failure")
+                
+                XCTFail("Unexpected failure")
             case .failure(let error):
                 
                 XCTAssertNotNil(error)

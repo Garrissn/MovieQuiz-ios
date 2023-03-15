@@ -8,15 +8,15 @@
 import XCTest
 
 final class MovieQuizUITests: XCTestCase {
-
+    
     var app: XCUIApplication!
     
     func testGameFinish() {
         sleep(2)
         
         for _ in 1...10 {
-         app.buttons["No"].tap()
-           sleep(2)
+            app.buttons["No"].tap()
+            sleep(2)
         }
         
         
@@ -54,14 +54,14 @@ final class MovieQuizUITests: XCTestCase {
         let firstPoster = app.images["Poster"] //Yаходим перврначальный постер
         let firstPosterData = firstPoster.screenshot().pngRepresentation
         
-       
+        
         app.buttons["No"].tap() //находим кнопку да и нажимаем ее
         
         sleep(3)
         
         let secondPoster = app.images["Poster"] //еще раз находим постер
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-    
+        
         let indexLabel = app.staticTexts["Index"]
         
         XCTAssertNotEqual(firstPosterData, secondPosterData)
@@ -75,21 +75,21 @@ final class MovieQuizUITests: XCTestCase {
         let firstPoster = app.images["Poster"] //Yаходим перврначальный постер
         let firstPosterData = firstPoster.screenshot().pngRepresentation
         
-       
+        
         app.buttons["Yes"].tap() //находим кнопку да и нажимаем ее
         
         sleep(3)
         
         let secondPoster = app.images["Poster"] //еще раз находим постер
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-    
+        
         XCTAssertNotEqual(firstPosterData, secondPosterData)
     }
     
     
     override func setUpWithError() throws {
         
-
+        
         try super.setUpWithError()
         
         app = XCUIApplication()
@@ -97,31 +97,25 @@ final class MovieQuizUITests: XCTestCase {
         
         // если один тест не прошел то след тесты запускаться не будут
         continueAfterFailure = false
-
+        
         
     }
-
+    
     override func tearDownWithError() throws {
         
         try super.tearDownWithError()
         app.terminate()
         app = nil
     }
-
+    
     func testExample() throws {
-        // UI tests must launch the application that they test.
+        
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
     }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+    
+    
 }
+

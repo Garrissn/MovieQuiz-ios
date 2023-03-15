@@ -10,7 +10,7 @@ import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
-         
+    
     private var currentQuestion: QuizQuestion?
     
     private weak var viewController: MovieQuizViewControllerProtocol?
@@ -20,7 +20,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
-
+    
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
@@ -68,8 +68,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     func didAnswer(isCorrectAnswer: Bool) {
         if isCorrectAnswer{
             correctAnswers += 1
-            }
-   }
+        }
+    }
     
     
     func restartGame() {
@@ -81,7 +81,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex += 1
     }
     
-     func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
+    func convert(model : QuizQuestion) -> QuizStepViewModel {// конвертация из  данных в модель которую надо //показать на экране
         
         return QuizStepViewModel (
             image: UIImage(data: model.image) ?? UIImage(), // Распаковка картинки
@@ -92,11 +92,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     
-//    func present(_ alertController: UIAlertController) {
-       // alertController.view.accessibilityIdentifier = "Game results"
-//        present(alertController)
-//    }
-    
     
     func yesButtonClicked() {
         
@@ -104,9 +99,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func noButtonClicked() {
-      
-      didAnswer(isYes: false)
-  }
+        
+        didAnswer(isYes: false)
+    }
     
     
     private func didAnswer(isYes: Bool) {
@@ -121,13 +116,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.highLightImageBorder(isCorrectAnswer: isCorrect)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                    guard let self = self else { return }
+            guard let self = self else { return }
             
             self.proceedToNextQuestionOrResults()
-                }
+        }
     }
     
- 
+    
     
     func proceedToNextQuestionOrResults() {
         
@@ -148,23 +143,23 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             questionFactory?.requestNextQuestion()
         }
     }
-            
+    
     func makeResultsMessage() -> String {
-            statisticService.store(correct: correctAnswers, total: questionsAmount)
-
-            let bestGame = statisticService.bestGame
-
-            let totalPlaysCountLine = "Количество сыгранных квизов: \(statisticService.gamesCount)"
-            let currentGameResultLine = "Ваш результат: \(correctAnswers)\\\(questionsAmount)"
-            let bestGameInfoLine = "Рекорд: \(bestGame.correct)\\\(bestGame.total)"
-            + " (\(bestGame.date.dateTimeString))"
-            let averageAccuracyLine = "Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
-
-            let resultMessage = [
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        
+        let bestGame = statisticService.bestGame
+        
+        let totalPlaysCountLine = "Количество сыгранных квизов: \(statisticService.gamesCount)"
+        let currentGameResultLine = "Ваш результат: \(correctAnswers)\\\(questionsAmount)"
+        let bestGameInfoLine = "Рекорд: \(bestGame.correct)\\\(bestGame.total)"
+        + " (\(bestGame.date.dateTimeString))"
+        let averageAccuracyLine = "Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
+        
+        let resultMessage = [
             currentGameResultLine, totalPlaysCountLine, bestGameInfoLine, averageAccuracyLine
-            ].joined(separator: "\n")
-
-            return resultMessage
-        }
+        ].joined(separator: "\n")
+        
+        return resultMessage
+    }
     
 }

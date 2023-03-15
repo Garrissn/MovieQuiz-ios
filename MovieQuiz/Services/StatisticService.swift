@@ -35,7 +35,7 @@ final class StatisticServiceImplementation: StatisticService {
             
             bestGame = gameRecord
         }
-       
+        
         overAllQuestions = overAllQuestions + Double(amount)
         
         totalCorrectAnswers = totalCorrectAnswers + Double(count)
@@ -49,22 +49,22 @@ final class StatisticServiceImplementation: StatisticService {
     var totalAccuracy: Double {
         get {
             let totalAccuracyValue = userDefaults.double(forKey: Keys.totalAccuracy.rawValue)
-           
+            
             return 100 * totalAccuracyValue
         }
-  
-          set {
-              userDefaults.set(newValue, forKey: Keys.totalAccuracy.rawValue) }
-  
-      }
+        
+        set {
+            userDefaults.set(newValue, forKey: Keys.totalAccuracy.rawValue) }
+        
+    }
     
     var gamesCount: Int {
         
         get { return userDefaults.integer(forKey:  Keys.gamesCount.rawValue) }
-            
+        
         set { userDefaults.set(newValue, forKey: Keys.gamesCount.rawValue) }
-                        }
-
+    }
+    
     
     
     var bestGame: GameRecord{
@@ -90,4 +90,4 @@ final class StatisticServiceImplementation: StatisticService {
     }
     
     
-    }
+}
