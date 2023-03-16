@@ -9,12 +9,6 @@ import Foundation
 import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
-
-    
-    
-    
-   
-    
     
     
     private var currentQuestion: QuizQuestion?
@@ -30,8 +24,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
-        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         alertPresenter = AlertPresenter(alertDelegate: viewController)
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
         
@@ -133,12 +128,12 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.hideLoadingIndicator()
         
         
-
-
+        
+        
         alertPresenter.makeAlertController(alertmodel: AlertModel(title: "Ошибка",
-                                                                   message: message,
-                                                                   buttonText: "Попробовать ещё раз",
-                                                                   completion: {[weak self] in
+                                                                  message: message,
+                                                                  buttonText: "Попробовать ещё раз",
+                                                                  completion: {[weak self] in
             guard let self = self else { return }
             self.restartGame()
         }))
@@ -151,24 +146,15 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         if self.isLastQuestion() {
             
             
-            let text = correctAnswers == self.questionsAmount ?
-            "Поздравляем, вы ответили на 10 из 10!" :
-            "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             
-//            let viewModel = QuizResultsViewModel(
-//                title: "Этот раунд окончен!",
-//                text: text,
-//                buttonText: "Сыграть ещё раз")
-//
-//            viewController?.show(quiz: viewModel)
+            let text = (correctAnswers == self.questionsAmount) ?
+            "Поздравляем, вы ответили на 10 из 10!" : makeResultsMessage()
             
-            let message = makeResultsMessage()
-            // должно быть ф-я презент и показ модели
             
             alertPresenter.makeAlertController(alertmodel: AlertModel(title: "Этот раунд окончен!",
-                                                                       message: message,
-                                                                       buttonText: "Сыграть еще раз",
-                                                                       completion: {[weak self] in
+                                                                      message: text,
+                                                                      buttonText: "Сыграть еще раз",
+                                                                      completion: {[weak self] in
                 guard let self = self else { return }
                 self.restartGame()
                 

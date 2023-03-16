@@ -14,7 +14,7 @@ import XCTest
 
 final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
     func alertPresent(_ alert: UIAlertController) {
-        <#code#>
+        
     }
     
     
