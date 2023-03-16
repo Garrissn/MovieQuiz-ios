@@ -9,6 +9,12 @@ import Foundation
 import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
+
+    
+    
+    
+   
+    
     
     
     private var currentQuestion: QuizQuestion?
@@ -16,7 +22,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private weak var viewController: MovieQuizViewControllerProtocol?
     private var questionFactory: QuestionFactoryProtocol?
     private var statisticService: StatisticService!
-    
+    private var alertPresenter: AlertPresenterProtocol
     private let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
     private var correctAnswers: Int = 0
@@ -25,6 +31,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         self.viewController = viewController
         statisticService = StatisticServiceImplementation(totalAccuracy: 0, gamesCount: 0)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        alertPresenter = AlertPresenter(alertDelegate: viewController)
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
         
@@ -39,7 +46,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     func didFailToLoadData(with error: Error) {
         let message = error.localizedDescription
-        viewController?.showNetworkError(message: message)
+        showNetworkError(message: message)
     }
     
     
@@ -56,7 +63,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func didFailToLoadImage (errorMessage: String) {
-        viewController?.showNetworkError(message: errorMessage)
+        showNetworkError(message: errorMessage)
     }
     
     
@@ -122,6 +129,21 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
+    func showNetworkError(message: String) {
+        viewController?.hideLoadingIndicator()
+        
+        
+
+
+        alertPresenter.makeAlertController(alertmodel: AlertModel(title: "Ошибка",
+                                                                   message: message,
+                                                                   buttonText: "Попробовать ещё раз",
+                                                                   completion: {[weak self] in
+            guard let self = self else { return }
+            self.restartGame()
+        }))
+        
+    }
     
     
     func proceedToNextQuestionOrResults() {
@@ -133,12 +155,26 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             "Поздравляем, вы ответили на 10 из 10!" :
             "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
             
-            let viewModel = QuizResultsViewModel(
-                title: "Этот раунд окончен!",
-                text: text,
-                buttonText: "Сыграть ещё раз")
+//            let viewModel = QuizResultsViewModel(
+//                title: "Этот раунд окончен!",
+//                text: text,
+//                buttonText: "Сыграть ещё раз")
+//
+//            viewController?.show(quiz: viewModel)
             
-            viewController?.show(quiz: viewModel)
+            let message = makeResultsMessage()
+            // должно быть ф-я презент и показ модели
+            
+            alertPresenter.makeAlertController(alertmodel: AlertModel(title: "Этот раунд окончен!",
+                                                                       message: message,
+                                                                       buttonText: "Сыграть еще раз",
+                                                                       completion: {[weak self] in
+                guard let self = self else { return }
+                self.restartGame()
+                
+            }))
+            
+            
             
             
         } else {

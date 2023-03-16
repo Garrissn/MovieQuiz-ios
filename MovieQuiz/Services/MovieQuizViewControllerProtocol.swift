@@ -8,12 +8,12 @@
 import Foundation
 
 
-protocol MovieQuizViewControllerProtocol: AnyObject {
+protocol MovieQuizViewControllerProtocol: AlertPresenterDelegate {
     
         func show(quiz step: QuizStepViewModel)
-        func show(quiz result: QuizResultsViewModel)
+       // func show(quiz result: QuizResultsViewModel)
         func highLightImageBorder(isCorrectAnswer: Bool)
         func showLoadingIndicator()
         func hideLoadingIndicator()
-        func showNetworkError(message: String)
+        //func showNetworkError(message: String)
 }

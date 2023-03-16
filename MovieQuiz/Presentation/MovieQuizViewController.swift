@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol, AlertPresenterDelegate {
+final class MovieQuizViewController: UIViewController, MovieQuizViewControllerProtocol {
     
     func alertPresent( _ alert: UIAlertController) {
         alert.view.accessibilityIdentifier = "Game results"
@@ -22,7 +22,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
     
     
-    private var alertPresenter: AlertPresenter?
+   
     private var presenter: MovieQuizPresenter!
     
     
@@ -31,7 +31,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         
         super.viewDidLoad()
         presenter = MovieQuizPresenter(viewController: self)
-        alertPresenter = AlertPresenter(alertDelegate: self)
+       
     }
     
     
@@ -45,23 +45,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     
-    func showNetworkError(message: String) {
-        hideLoadingIndicator()
-        
-        
-        
-        
-        
-        alertPresenter?.makeAlertController(alertmodel: AlertModel(title: "Ошибка",
-                                                                   message: message,
-                                                                   buttonText: "Попробовать ещё раз",
-                                                                   completion: {[weak self] in
-            guard let self = self else { return }
-            self.presenter.restartGame()
-        }))
-        
-    }
-    
+
     
     func show(quiz step: QuizStepViewModel) {  // здесь мы заполняем нашу картинку, текст и счётчик данными
         
@@ -88,22 +72,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     
-    func show(quiz result: QuizResultsViewModel) {
-        
-        let message = presenter.makeResultsMessage()
-        // должно быть ф-я презент и показ модели
-        
-        alertPresenter?.makeAlertController(alertmodel: AlertModel(title: result.title,
-                                                                   message: message,
-                                                                   buttonText: result.buttonText,
-                                                                   completion: {[weak self] in
-            guard let self = self else { return }
-            self.presenter.restartGame()
-        }))
-        
-        
-        
-    }
+
     
     
     

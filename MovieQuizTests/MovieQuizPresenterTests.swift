@@ -13,10 +13,12 @@ import XCTest
 
 
 final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
-    
-    func show(quiz result: MovieQuiz.QuizResultsViewModel) {
-        
+    func alertPresent(_ alert: UIAlertController) {
+        <#code#>
     }
+    
+    
+   
     
     func highLightImageBorder(isCorrectAnswer: Bool) {
         
@@ -30,9 +32,6 @@ final class MovieQuizViewControllerMock: MovieQuizViewControllerProtocol {
         
     }
     
-    func showNetworkError(message: String) {
-        
-    }
     
     
     func show(quiz step: QuizStepViewModel) {
