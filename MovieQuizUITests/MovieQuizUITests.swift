@@ -82,8 +82,10 @@ final class MovieQuizUITests: XCTestCase {
         
         let secondPoster = app.images["Poster"] //еще раз находим постер
         let secondPosterData = secondPoster.screenshot().pngRepresentation
-        
+        let indexLabel = app.staticTexts["Index"]
+
         XCTAssertNotEqual(firstPosterData, secondPosterData)
+        XCTAssertEqual(indexLabel.label, "2 / 10")
     }
     
     
